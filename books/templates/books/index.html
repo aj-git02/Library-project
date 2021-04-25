@@ -19,6 +19,23 @@
         {% endfor %}
     </ul>
 </h2>
+<h2>Search for books you like (write the book's name)</h2>
+<form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="argument" placeholder="argument">
+    <input type="submit">
+</form>
+{% if msg %}
+<h2>results:</h2>
+<ul>
+    {% for object in msg %}
+    <li>
+        Book {{ object.id }}:{{ object.Name }}
+        <a href= "{% url 'book' object.id %}">For more info ...</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
 <h2>All other books</h2>
 <ul>
     {%for book in books %}

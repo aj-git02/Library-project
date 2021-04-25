@@ -37,4 +37,17 @@ def issue(request,book_id):
             return HttpResponseRedirect(reverse("index1"),{
                 "message":"invalid credentials"
             })
-        
+
+def search(request):
+    if request.method=="POST":
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("login"))
+        x=Borrow.objects.filter(Issuer=request.user.username).filter(Onapproval=0)
+        y=Borrow.objects.filter(Issuer=request.user.username).filter(Onapproval=1)
+        details=Books.objects.filter(Name__icontains=request.POST["argument"])
+        return render(request,"books/index.html",{
+            "msg":details,
+            "books":Books.objects.all(),
+            "approved":y,
+            "unapproved":x
+        })
