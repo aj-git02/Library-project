@@ -1,0 +1,10 @@
+{% extends "books/layout.html" %}
+{% block body %}
+<h1>Books {{ book.id }}</h1>
+<ul>
+    <li>Name:{{book.Name}}</li>
+    <li>Description:{{book.Description}}</li>
+    <li>Rating (out of 10):{{book.rating}}</li>
+</ul>
+<a href="{% url 'index' %}">Back to Book List</a>"
+{% endblock %}
