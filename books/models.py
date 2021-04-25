@@ -8,3 +8,10 @@ class Books(models.Model):
 
     def __str__(self):
         return f"{self.Name}"
+
+class Borrow(models.Model):
+    Issuer = models.CharField(max_length=10)
+    Name = models.ForeignKey(Books,on_delete=models.CASCADE,related_name="issuers")
+
+    def __str__(self):
+        return f"{self.Issuer} has issued {self.Name}"

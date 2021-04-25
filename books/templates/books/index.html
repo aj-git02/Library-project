@@ -1,6 +1,9 @@
 {% extends "books/layout.html" %}
 
 {% block body %}
+{% if message %}
+<div>{{ message }}</div>
+{% endif %}
 <h1>Books</h1>
 <ul>
     {%for book in books %}
@@ -8,7 +11,7 @@
     <li>Book {{ book.rating }}</li>
     <li>Book {{ book.Description }}</li>
     <li>
-        <a href= "{ url 'book' book.id %}">For more info ...</a>
+        <a href= "{% url 'book' book.id %}">For more info ...</a>
     </li>
     {% endfor %}
 </ul>
