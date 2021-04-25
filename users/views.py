@@ -3,18 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from . import templates
 
-# Create your views here.
 def index(request):
-    if not request.users.is_authenticated:
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     return render(request,"users/user.html")
 
 def login_view(request):
     if request.method=="POST":
-        username=request.POST("Username")
-        password=request.POST("Password")
+        username=request.POST["username"]
+        password=request.POST["password"]
         user=authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
@@ -36,11 +34,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("login"))
     else:
         form = UserCreationForm()
     return render(request, 'users/signup.html', {'form': form})

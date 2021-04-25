@@ -12,6 +12,6 @@ class Books(models.Model):
 class Borrow(models.Model):
     Issuer = models.CharField(max_length=10)
     Name = models.ForeignKey(Books,on_delete=models.CASCADE,related_name="issuers")
-
+    Onapproval = models.BooleanField()
     def __str__(self):
         return f"{self.Issuer} has issued {self.Name}"

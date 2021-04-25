@@ -5,8 +5,14 @@ from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
 
 def index1(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    x=Borrow.objects.filter(Issuer=request.user.username).filter(Onapproval=0)
+    y=Borrow.objects.filter(Issuer=request.user.username).filter(Onapproval=1)
     return render(request,"books/index.html",{
-        "books":Books.objects.all()
+        "books":Books.objects.all(),
+        "approved":y,
+        "unapproved":x
     })
 
 def book(request,book_id):
@@ -22,9 +28,10 @@ def issue(request,book_id):
         password=request.POST["password"]
         user=authenticate(request,username=username,password=password)
         if user is not None:
-            x=Borrow.objects.get(Issuer=username)
-            y=Books.objects.get(pk=book_id)
-            y.issuers.add(x)
+            #Books.objects.get(pk=book_id).issuers.add(Borrow.objects.get(Issuer=username))
+            #Books.objects.get(pk=book_id).add(is)
+            f=Borrow(Issuer=username,Name=y,Onapproval=0)
+            f.save()
             return HttpResponseRedirect(reverse("index1"))
         else:
             return HttpResponseRedirect(reverse("index1"),{

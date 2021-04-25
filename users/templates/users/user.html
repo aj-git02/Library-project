@@ -1,9 +1,9 @@
 {% extends "users/layout.html" %}
 {% block body %}
-<h1> Welcome, {{ request.user.first_naem }}</h1>
+<h1> Welcome, {{ request.user.username }}</h1>
 <ul>
     <li>Username: {{request.user.username}}</li>
-    <li>Email: {{ request.user.email }}</li>
+    <a href="http://127.0.0.1:8000/books/">View all books</a>
 </ul>
-<a href="{% url 'logout' %}">Log out</a>
+<a href="{% url 'logout' %}" >Log out</a>
 {% endblock %}

@@ -5,12 +5,25 @@
 <div>{{ message }}</div>
 {% endif %}
 <h1>Books</h1>
+<h2>
+    Your books:
+    <ul>
+        {% for item in approved %}
+        <li>{{item}}</li>
+        {% endfor %}
+    </ul>
+    pending books:
+    <ul>
+        {% for item in unapproved %}
+        <li>{{item}}</li>
+        {% endfor %}
+    </ul>
+</h2>
+<h2>All other books</h2>
 <ul>
     {%for book in books %}
-    <li>Book {{ book.id }}:{{ book.Name }}</li>
-    <li>Book {{ book.rating }}</li>
-    <li>Book {{ book.Description }}</li>
     <li>
+        Book {{ book.id }}:{{ book.Name }}
         <a href= "{% url 'book' book.id %}">For more info ...</a>
     </li>
     {% endfor %}
